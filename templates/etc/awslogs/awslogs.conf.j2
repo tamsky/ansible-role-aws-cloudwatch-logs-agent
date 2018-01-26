@@ -127,4 +127,16 @@ datetime_format = {{ log.format }}
 file = {{ log.file }}
 log_group_name = {{ log.group_name }}
 log_stream_name = {{ log.stream_name | default(stream_name) }}
+{% if log.end_of_file %}
+initial_position = end_of_file
+{% endif %}
+{% if log.multi_line_start_pattern is defined %}
+multi_line_start_pattern = {{ log.multi_line_start_pattern }}
+{% endif %}
+{% if log.encoding is defined %}
+encoding = {{ log.encoding }}
+{% endif %}
+{% if log.time_zone is defined %}
+time_zone = {{ log.time_zone }}
+{% endif %}
 {% endfor %}
