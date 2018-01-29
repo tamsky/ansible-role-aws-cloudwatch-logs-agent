@@ -127,7 +127,7 @@ datetime_format = {{ log.format }}
 file = {{ log.file }}
 log_group_name = {{ log.group_name }}
 log_stream_name = {{ log.stream_name | default(stream_name) }}
-{% if log.end_of_file %}
+{% if log.initial_end_of_file is defined and log.initial_end_of_file %}
 initial_position = end_of_file
 {% endif %}
 {% if log.multi_line_start_pattern is defined %}
