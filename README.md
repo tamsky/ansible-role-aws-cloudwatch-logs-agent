@@ -53,7 +53,7 @@ Example Playbook
         format: "%Y-%m-%d %H:%M:%s,%f"
         group_name: "mlp"
         stream_name: "mlp-1"
-        multi_line_start_pattern: "^WARNING\s+\d{4}"
+        multi_line_start_pattern: "^WARNING\\s+"
         initial_end_of_file: yes
         encoding: "utf_8"
         time_zone: "UTC"
