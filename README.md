@@ -37,6 +37,8 @@ Example Playbook
             stream_name: "auth-stream"
           - file: /home/ubuntu/.bash_history
             group_name: "bash_history"
+        daemon_name: "awslogsd"
+        awslogs_loglevel: info
       roles:
          - { role: dharrisio.aws-cloudwatch-logs }
 
