@@ -20,6 +20,9 @@ List of logs with the following keys
 | group_name  | CloudWatch Log Group       | Yes      |
 | stream_name | CloudWatch Log Stream Name | No       | The instance id
 
+`daemon_name`: Optional AWS log daemon service name, e.g. "awslogsd" for Amazon
+Linux 2
+
 Dependencies
 ------------
 
