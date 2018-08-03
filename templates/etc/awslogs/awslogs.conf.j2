@@ -126,6 +126,6 @@ datetime_format = {{ log.datetime_format }}
 {% endif %}
 file = {{ log.file }}
 log_group_name = {{ log.log_group_name }}
-log_stream_name = {{ log.stream_name | default(log_stream_name) }}
+log_stream_name = {{ log.log_stream_name | default(log_stream_name) }}
 time_zone = {{ log.time_zone | default(time_zone) }}
 {% endfor %}
