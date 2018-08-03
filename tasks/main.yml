@@ -10,4 +10,11 @@
   when:
     - agent_setup_log.stat.exists == False
 
-
+- name: "Restart awslogs service."
+  service:
+    name: "{{ daemon_name }}"
+    state: restarted
+    enabled: yes
+# TODO(tamsky):
+#  when:
+#    - not ( agent_service_always_restart == True )
