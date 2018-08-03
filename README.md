@@ -13,12 +13,12 @@ Role Variables
 
 `logs`, `extra_logs`: list of logs with the following keys:
 
-| Name        | Description                | Required | Default
-|-------------|----------------------------|----------|---------
-| file        | Full path to log file      | Yes      |
-| format      | Datetime format            | No       | None
-| group_name  | CloudWatch Log Group       | Yes      |
-| stream_name | CloudWatch Log Stream Name | No       | The instance id
+| Name            | Description                | Required | Default
+|-----------------|----------------------------|----------|---------
+| file            | Full path to log file      | Yes      |
+| datetime_format | Datetime format            | No       | None
+| log_group_name  | CloudWatch Log Group       | Yes      |
+| log_stream_name | CloudWatch Log Stream Name | No       | The instance id
 
 `daemon_name`: Optional AWS log daemon service name, e.g. "awslogsd" for Amazon
 Linux 2
@@ -42,11 +42,12 @@ Example Playbook
       vars:
         logs:
           - file: /var/log/audit/audit.log
-            format: "%b %d %H:%M:%S"
-            group_name: "auth"
-            stream_name: "auth-stream"
+            # auditd's timestamps are in epoch-seconds, which do appear to be parseable using awslogs datetime_format
+            # datetime_format: "%b %d %H:%M:%S"
+            log_group_name: "audit"
+            log_stream_name: "audit-stream"
           - file: /home/ubuntu/.bash_history
-            group_name: "bash_history"
+            log_group_name: "bash_history"
         awslogs_loglevel: info
         daemon_name: "awslogsd"
       pre_tasks:
