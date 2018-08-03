@@ -41,7 +41,7 @@ Example Playbook
     - hosts: servers
       vars:
         logs:
-          - file: /var/log/auth.log
+          - file: /var/log/audit/audit.log
             format: "%b %d %H:%M:%S"
             group_name: "auth"
             stream_name: "auth-stream"
@@ -50,7 +50,7 @@ Example Playbook
         awslogs_loglevel: info
         daemon_name: "awslogsd"
       pre_tasks:
-        - ec2_facts:
+        - ec2_metadata_facts:
       roles:
          - { role: dharrisio.aws-cloudwatch-logs }
 
