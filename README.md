@@ -42,7 +42,10 @@ Example Playbook
       vars:
         logs:
           - file: /var/log/audit/audit.log
-            # auditd's timestamps are in epoch-seconds, which do appear to be parseable using awslogs datetime_format
+            # auditd's timestamps are in epoch-seconds, which do NOT appear to
+            # be parseable using any available datetime_format; so, we disable
+            # the datetime_format, and defaults event time to the read() time.
+            #
             # datetime_format: "%b %d %H:%M:%S"
             log_group_name: "audit"
             log_stream_name: "audit-stream"
