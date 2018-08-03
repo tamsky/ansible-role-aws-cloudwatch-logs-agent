@@ -49,6 +49,8 @@ Example Playbook
             group_name: "bash_history"
         awslogs_loglevel: info
         daemon_name: "awslogsd"
+      pre_tasks:
+        - ec2_facts:
       roles:
          - { role: dharrisio.aws-cloudwatch-logs }
 
