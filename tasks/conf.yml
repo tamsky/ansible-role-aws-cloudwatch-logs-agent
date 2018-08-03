@@ -12,6 +12,9 @@
     state: directory
     mode: 755
 
+- name: gather EC2 facts
+  ec2_instance_facts:
+
 - name: "Make /var/awslogs/state/ directory"
   file:
     path: /var/awslogs/state/
