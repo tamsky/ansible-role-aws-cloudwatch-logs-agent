@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  author: David Harris
+  author: Sean Herman
   description: Install and configure AWS CloudWatch Logs Agent
-  company: Balihoo
+  company: BrightGauge
   license: license (GPLv3)
   min_ansible_version: 1.2
   platforms:
@@ -15,7 +15,8 @@ galaxy_info:
   - name: Ubuntu
     versions:
     - trusty
-  
+    - xenial
+
   categories:
   - cloud
   - cloud:ec2
