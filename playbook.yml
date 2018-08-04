@@ -1,0 +1,15 @@
+
+- hosts: 127.0.0.1
+  vars:
+    logs:
+      - file: /var/log/audit/audit.log
+        log_group_name: "audit"
+        log_stream_name: "audit-stream"
+      - file: /home/*/.bash_history
+        log_group_name: "bash_history"
+        log_stream_name: "bash_history-stream"
+    awslogs_loglevel: info
+  pre_tasks:
+     - ec2_metadata_facts:
+  roles:
+     - role: ansible-role-aws-cloudwatch-logs-agent

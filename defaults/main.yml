@@ -1,6 +1,8 @@
 ---
 # defaults file for ansible-aws-cloudwatch-logs-agent
 extra_logs: {}
-stream_name: "{instance_id}"
+log_stream_name: "{instance_id}"
 aws_region: us-east-1
 awslogs_loglevel: ""
+daemon_name: "awslogs"
+time_zone: UTC

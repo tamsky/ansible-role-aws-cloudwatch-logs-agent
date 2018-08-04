@@ -16,13 +16,14 @@ Role Variables
 | Name                        | Description                       | Required  | Choices   | Default |
 |-----------------------------|-----------------------------------|-----------|-----------|---------|
 | `file`                      | Full path to log file             | Yes       |           |
-| `format`                    | Datetime format                   | No        |           | None
-| `group_name`                | CloudWatch Log Group              | Yes       |           |
-| `stream_name`               | CloudWatch Log Stream Name        | No        |           | The instance id
+| `datetime_format`           | Datetime format                   | No        |           | None
+| `log_group_name`            | CloudWatch Log Group              | Yes       |           |
+| `log_stream_name`           | CloudWatch Log Stream Name        | No        |           | The instance id
 | `multi_line_start_pattern`  | Pattern identifying line start    | No        |           |
 | `initial_end_of_file`       | Start reading at end of file      | No        |           |
 | `encoding`                  | File encoding                     | No        | [see reference](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AgentReference.html) | `utf_8`
 | `time_zone`                 | Timestamp time zone               | No        | LOCAL, UTC | `LOCAL`
+| `daemon_name`               | log daemon service name           | No        | `awslogsd` for Amazon Linux 2 | `awslogs`
 
 `awslogs_loglevel`: maximal log level for the Log Agent's logs itself
 ("debug", "info", "warning", "error" or "critical"). If this parameter is
@@ -39,29 +40,35 @@ This role has no dependencies.
 Example Playbook
 ----------------
 
-```yaml
-- hosts: servers
-  vars:
-    logs:
-      - file: /var/log/auth.log
-        format: "%b %d %H:%M:%S"
-        group_name: "auth"
-        stream_name: "auth-stream"
-      - file: /home/ubuntu/.bash_history
-        group_name: "bash_history"
-      - file: /var/log/example.log
-        format: "%Y-%m-%d %H:%M:%s,%f"
-        group_name: "mlp"
-        stream_name: "mlp-1"
-        multi_line_start_pattern: "^WARNING\\s+"
-        initial_end_of_file: yes
-        encoding: "utf_8"
-        time_zone: "UTC"
+    - hosts: servers
+      pre_tasks:
+        - ec2_metadata_facts:
+      roles:
+         - role: dharrisio.aws-cloudwatch-logs
+           awslogs_loglevel: info
+	   daemon_name: "awslogsd"
+	   logs:
+           - file: /var/log/audit/audit.log
+             # auditd's timestamps are in epoch-seconds, which do NOT appear to
+             # be parseable using any available datetime_format; so, we disable
+             # the datetime_format, and defaults event time to the read() time.
+             #
+             # datetime_format: "%b %d %H:%M:%S"
+             log_group_name: "audit"
+             log_stream_name: "audit-stream"
 
-    awslogs_loglevel: info
-  roles:
-     - { role: dharrisio.aws-cloudwatch-logs }
-```
+           - file: /home/ubuntu/.bash_history
+             log_group_name: "bash_history"
+
+           - file: /var/log/example.log
+             datetime_format: "%Y-%m-%d %H:%M:%s,%f"
+             log_group_name: "mlp"
+             log_stream_name: "mlp-1"
+             multi_line_start_pattern: "^WARNING\\s+"
+             initial_end_of_file: yes
+             encoding: "utf_8"
+             time_zone: "UTC"
+     
 
 License
 -------
