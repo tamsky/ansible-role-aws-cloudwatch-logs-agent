@@ -120,6 +120,7 @@ logging_config_file = /etc/awslogs/awslogs.logging.conf
 # ----------------------------------------------------------------------------------------------------------------------
 
 {% for log in logs|list + extra_logs|list %}
+
 [{{ log.file }}]
 {% if log.format is defined %}
 datetime_format = {{ log.datetime_format }}
@@ -139,4 +140,5 @@ encoding = {{ log.encoding }}
 {% if log.time_zone is defined %}
 time_zone = {{ log.time_zone }}
 {% endif %}
+
 {% endfor %}
