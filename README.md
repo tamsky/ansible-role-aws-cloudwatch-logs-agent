@@ -3,6 +3,11 @@ Role Name
 
 Installs AWS CloudWatch Log Agent
 
+Note: this agent is deprecated by the "Unified Agent" announced December 2017
+https://aws.amazon.com/about-aws/whats-new/2017/12/amazon-cloudwatch-introduces-a-new-cloudwatch-agent-with-aws-systems-manager-integration-for-unified-metrics-and-logs-collection/
+
+see: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/UseCloudWatchUnifiedAgent.html
+
 Requirements
 ------------
 
